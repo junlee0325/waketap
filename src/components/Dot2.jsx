@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect, useRef } from "react";
-import angel1 from "../assets/angel1.webp";
+import evil1 from "../assets/evil8.webp";
+import dagger2 from "../assets/dagger2.png"
 
 export const Dot2 = ({
   onDotClick,
@@ -10,6 +11,14 @@ export const Dot2 = ({
   invertPercent,
   trigger,
 }) => {
+      // Preload images for instant switching
+      useEffect(() => {
+      
+        const img = new Image();
+        img.src = evil1;
+      
+    }, []);
+
   // positions Dot in random place initially
   const [top, setTop] = useState(Math.random() * (85 - 10) + 10);
   const [left, setLeft] = useState(Math.random() * (90 - 10) + 10);
@@ -24,17 +33,11 @@ export const Dot2 = ({
       const interval1 = setInterval(() => {
         setTop(Math.random() * (85 - 10) + 10);
         setLeft(Math.random() * (90 - 10) + 10);
-      }, 900);
-
-      // const interval2 = setInterval(() => {
-      //   setTop(Math.random() * (90 - 10) + 10);
-      //   setLeft(Math.random() * (90 - 10) + 10);
-      // }, 1000);
+      }, 940);
 
       // return statement within a useEffect hook in React is used to define a cleanup function. This function executes when the component unmounts or before the effect re-runs due to changes in its dependencies. It serves to prevent memory leaks and unexpected behaviors by cleaning up resources established by the effect.
       return () => {
         clearInterval(interval1);
-        // clearInterval(interval2)
       }
     } else {
       return
@@ -54,18 +57,19 @@ export const Dot2 = ({
     <div>
     {trigger && <div
       onClick={handleClick}
-      className="z-3 bg-none w-[8vh] h-[8vh] rounded-[50%] flex justify-center absolute cursor-pointer border border-2 border-[rgba(255,255,255,.2)]"
+      className="z-3  w-[8vh] h-[8vh] rounded-[50%] flex justify-center absolute border border-2 border-[rgba(255,255,255,.2)] active:translate-y-[3px]"
       style={{
         top: `${top}%`,
         left: `${left}%`,
         background: bgColor,
         boxShadow: feather,
-        opacity: dotOpacity
+        opacity: dotOpacity,
+        cursor: `url(${dagger2}), auto`
       }}
       draggable="false"
     >
       <img
-        src={angel1}
+        src={evil1}
         alt="angel"
         className="h-full "
         style={{ filter: invertPercent }}
